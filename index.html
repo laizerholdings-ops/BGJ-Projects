@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGJ Projects | Professional Renovations & Maintenance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bgj-yellow: #FFB300;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        
+        @keyframes pulse-whatsapp {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 6px 20px rgba(255, 179, 0, 0.4); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-panel {
+            background: rgba(15, 15, 15, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-whatsapp 2.5s infinite;
+            transition: all 0.3s;
+            padding: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .whatsapp-fab { width: 70px; height: 70px; bottom: 40px; right: 40px; }
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 500px;
+            padding-bottom: 2.5rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Video Background Styling */
+        #video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        .bg-overlay-heavy {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.95) 100%);
+            z-index: -1;
+        }
+
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #000000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+
+        .spinner {
+            width: 56px;
+            height: 56px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #FFB300;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .nav-link {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            transition: color 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-black text-white selection:bg-yellow-500 overflow-x-hidden">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner mb-4"></div>
+        <p class="text-white font-black tracking-[0.3em] uppercase text-xs italic">BGJ Projects</p>
+    </div>
+
+    <!-- Video Background -->
+    <video autoplay muted loop playsinline id="video-bg">
+        <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay-heavy"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6 sm:py-8">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="bg-yellow-500 p-2 rounded-lg shadow-xl border border-white/10">
+                   <span class="text-black font-black text-xl leading-none">BGJ</span>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-xl sm:text-2xl font-black tracking-tighter italic uppercase text-white">PROJECTS</span>
+                    <span class="text-[8px] sm:text-[10px] font-bold tracking-[0.4em] uppercase opacity-90 text-yellow-500">(PTY) LTD</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center space-x-10">
+                <a href="#home" class="nav-link text-white hover:text-yellow-500">Home</a>
+                <a href="#services" class="nav-link text-white hover:text-yellow-500">Services</a>
+                <a href="#about" class="nav-link text-white hover:text-yellow-500">About Us</a>
+                <a href="#contacts" class="nav-link text-white hover:text-yellow-500">Contacts</a>
+                <a href="tel:0645902826" class="bg-yellow-500 text-black px-8 py-3 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-yellow-400 transition-all hover:scale-105 shadow-lg shadow-yellow-500/30">
+                    Call 064 590 2826
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-toggle" class="lg:hidden p-3 rounded-xl glass-panel text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div id="sidebar" class="fixed inset-0 bg-zinc-950 z-[60] transition-transform duration-500 lg:hidden translate-x-full">
+        <div class="flex justify-between items-center p-8 border-b border-white/5">
+            <div class="flex items-center gap-3">
+                <div class="bg-yellow-500 p-2 rounded-lg">
+                    <span class="text-black font-black text-xl leading-none">BGJ</span>
+                </div>
+                <span class="text-2xl font-black italic uppercase text-white">PROJECTS</span>
+            </div>
+            <button id="close-menu"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="flex flex-col p-8 space-y-8">
+            <a href="#home" class="mobile-link text-4xl font-black italic uppercase tracking-tighter text-white">Home</a>
+            <a href="#services" class="mobile-link text-4xl font-black italic uppercase tracking-tighter text-white">Services</a>
+            <a href="#about" class="mobile-link text-4xl font-black italic uppercase tracking-tighter text-white">About Us</a>
+            <a href="#contacts" class="mobile-link text-4xl font-black italic uppercase tracking-tighter text-white">Contacts</a>
+            <div class="pt-10">
+                <a href="tel:0645902826" class="flex items-center justify-center w-full bg-yellow-500 text-black py-6 rounded-2xl font-black uppercase italic tracking-widest text-lg">Call Harry</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative px-6 pt-24">
+        <div class="text-center max-w-5xl">
+            <span class="reveal bg-yellow-500/20 backdrop-blur-md border border-yellow-500/30 text-yellow-500 px-6 py-2 rounded-full text-[10px] sm:text-[12px] font-black uppercase tracking-[0.4em] mb-10 inline-block">
+                Professional Construction & Maintenance
+            </span>
+            <h1 class="reveal text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white mb-8 uppercase tracking-tighter leading-[0.9] italic">
+                Quality Results <span class="text-yellow-500 block not-italic">Can't Wait.</span>
+            </h1>
+            <p class="reveal text-lg sm:text-2xl md:text-3xl text-slate-200 mb-14 max-w-3xl mx-auto font-medium leading-relaxed">
+                Why postpone it when we are there for you every step of the way? <br class="hidden sm:block">Building excellence in Gauteng with a 7-year guarantee.
+            </p>
+            <div class="reveal flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="https://wa.me/27645902826" class="bg-yellow-500 text-black font-black py-5 px-12 rounded-2xl text-lg hover:scale-105 transition-all flex items-center justify-center shadow-2xl shadow-yellow-500/20">
+                    <i class="fa-brands fa-whatsapp text-2xl mr-4"></i> WhatsApp Harry
+                </a>
+                <a href="#contacts" class="bg-white/10 backdrop-blur-md border border-white/20 text-white font-black py-5 px-12 rounded-2xl text-lg hover:bg-white/20 transition-all flex items-center justify-center">
+                    Get Free Quote
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="relative z-10 px-6 -mt-16">
+        <div class="reveal max-w-7xl mx-auto glass-panel p-10 sm:p-16 rounded-[2.5rem] sm:rounded-[3rem] shadow-2xl grid grid-cols-1 md:grid-cols-3 gap-12 text-center text-white">
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-shield-halved text-4xl text-yellow-500 mb-5"></i>
+                <h3 class="font-black text-xl uppercase tracking-widest italic mb-2">7-Year Guarantee</h3>
+                <p class="text-slate-400 text-sm">On All Workmanship</p>
+            </div>
+            <div class="flex flex-col items-center border-y md:border-y-0 md:border-x border-white/10 py-10 md:py-0">
+                <i class="fa-solid fa-sack-dollar text-4xl text-yellow-500 mb-5"></i>
+                <h3 class="font-black text-xl uppercase tracking-widest italic mb-2">Refer & Get 5%</h3>
+                <p class="text-slate-400 text-sm">Earn for every referral</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-clock-rotate-left text-4xl text-yellow-500 mb-5"></i>
+                <h3 class="font-black text-xl uppercase tracking-widest italic mb-2">Every Step</h3>
+                <p class="text-slate-400 text-sm">Full project management</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 sm:py-40 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal glass-panel p-8 sm:p-20 rounded-[3rem] sm:rounded-[4rem] border border-white/5 overflow-hidden">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tighter italic mb-8">
+                            About <span class="text-yellow-500">Us</span>
+                        </h2>
+                        <p class="text-slate-300 text-lg sm:text-xl font-medium leading-relaxed mb-6">
+                            At BGJ Projects (PTY) LTD, we believe that your home or business environment should be a source of pride, not stress. We specialize in comprehensive renovation and maintenance solutions.
+                        </p>
+                        <p class="text-slate-400 text-base leading-relaxed mb-8">
+                            "Why postpone it when we are there for you every step of the way?" - This is our promise to you. From planning to final finishing, we ensure a professional result that stands the test of time.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-500"></i> <span class="text-[10px] font-black uppercase tracking-widest">Affordable</span></div>
+                            <div class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-500"></i> <span class="text-[10px] font-black uppercase tracking-widest">Expert Team</span></div>
+                            <div class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-500"></i> <span class="text-[10px] font-black uppercase tracking-widest">Premium Quality</span></div>
+                            <div class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-500"></i> <span class="text-[10px] font-black uppercase tracking-widest">Fast Delivery</span></div>
+                        </div>
+                    </div>
+                    <div class="relative group mt-10 lg:mt-0">
+                        <div class="absolute -inset-1 bg-yellow-500 rounded-3xl blur opacity-10 group-hover:opacity-30 transition duration-1000"></div>
+                        <!-- Refined Professional Image -->
+                        <img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=1200" class="relative rounded-3xl grayscale hover:grayscale-0 transition-all duration-700 aspect-video lg:aspect-square object-cover shadow-2xl shadow-yellow-500/10" alt="Professional Work">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="py-24 sm:py-40 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-24 reveal">
+                <h2 class="text-4xl sm:text-7xl font-black text-white uppercase tracking-tighter italic">Our <span class="text-yellow-500 not-italic">Specialties</span></h2>
+                <div class="w-24 h-2 bg-yellow-500 mx-auto mt-8 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Service 1 -->
+                <div class="reveal group p-10 rounded-[2.5rem] shadow-2xl border-b-[10px] border-yellow-500 transition-all hover:-translate-y-4 glass-panel">
+                    <div class="flex flex-col sm:flex-row gap-8 items-start">
+                        <div class="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 text-yellow-500">
+                            <i class="fa-solid fa-hammer text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black mb-5 uppercase tracking-wide italic text-white leading-tight">Renovations</h3>
+                            <ul class="text-slate-300 text-sm space-y-2 font-medium">
+                                <li>• Kitchen & Bathroom Remodeling</li>
+                                <li>• Custom Room & Kitchen Cabinets</li>
+                                <li>• Professional Tiling & Paving</li>
+                                <li>• Complete Plumbing Solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Service 2 -->
+                <div class="reveal group p-10 rounded-[2.5rem] shadow-2xl border-b-[10px] border-zinc-600 transition-all hover:-translate-y-4 glass-panel">
+                    <div class="flex flex-col sm:flex-row gap-8 items-start">
+                        <div class="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 text-white">
+                            <i class="fa-solid fa-building text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black mb-5 uppercase tracking-wide italic text-white leading-tight">Construction</h3>
+                            <ul class="text-slate-300 text-sm space-y-2 font-medium">
+                                <li>• Roof Construction & Painting</li>
+                                <li>• Concrete & Foundation Work</li>
+                                <li>• Steelwork & Structural Repairs</li>
+                                <li>• Window Putty Fixing & Finishing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Service 3 -->
+                <div class="reveal group p-10 rounded-[2.5rem] shadow-2xl border-b-[10px] border-yellow-600 transition-all hover:-translate-y-4 glass-panel">
+                    <div class="flex flex-col sm:flex-row gap-8 items-start">
+                        <div class="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 text-yellow-500">
+                            <i class="fa-solid fa-paint-roller text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black mb-5 uppercase tracking-wide italic text-white leading-tight">Maintenance</h3>
+                            <ul class="text-slate-300 text-sm space-y-2 font-medium">
+                                <li>• Interior & Exterior Painting</li>
+                                <li>• Roof Sealing & Damp Proofing</li>
+                                <li>• Professional Waterproofing</li>
+                                <li>• Crack Fixing & Structural Care</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Service 4 -->
+                <div class="reveal group p-10 rounded-[2.5rem] shadow-2xl border-b-[10px] border-zinc-700 transition-all hover:-translate-y-4 glass-panel">
+                    <div class="flex flex-col sm:flex-row gap-8 items-start">
+                        <div class="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 text-white">
+                            <i class="fa-solid fa-shield text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black mb-5 uppercase tracking-wide italic text-white leading-tight">Security</h3>
+                            <ul class="text-slate-300 text-sm space-y-2 font-medium">
+                                <li>• Gate & Palisade Installation</li>
+                                <li>• Decorative Palisade Waves</li>
+                                <li>• Custom Steelwork of any kind</li>
+                                <li>• General Metal Maintenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (Expanded to 5 Questions) -->
+    <section id="faq" class="py-24 sm:py-40 relative">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tighter italic">Technical <span class="text-yellow-500 not-italic">Help</span></h2>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Q1 -->
+                <div class="reveal faq-item glass-panel rounded-3xl border border-white/5 transition-all">
+                    <button class="faq-btn w-full flex justify-between items-center p-8 text-left">
+                        <span class="font-black uppercase tracking-tight italic text-base sm:text-xl text-white pr-6">How does the 7-year guarantee work?</span>
+                        <i class="fa-solid fa-plus faq-icon text-yellow-500 transition-transform duration-500"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-400 font-medium text-sm sm:text-lg leading-relaxed">
+                        <div class="border-t border-white/5 pt-6">
+                            Our 7-year guarantee covers our workmanship. If any issues arise from the labor we performed during that period, we will return to fix it at no additional cost.
+                        </div>
+                    </div>
+                </div>
+                <!-- Q2 -->
+                <div class="reveal faq-item glass-panel rounded-3xl border border-white/5 transition-all">
+                    <button class="faq-btn w-full flex justify-between items-center p-8 text-left">
+                        <span class="font-black uppercase tracking-tight italic text-base sm:text-xl text-white pr-6">Is the 5% referral bonus paid in cash?</span>
+                        <i class="fa-solid fa-plus faq-icon text-yellow-500 transition-transform duration-500"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-400 font-medium text-sm sm:text-lg leading-relaxed">
+                        <div class="border-t border-white/5 pt-6">
+                            Yes! When you refer a client to us and they sign a contract, you receive 5% of the project value as a referral bonus once the initial deposit is confirmed.
+                        </div>
+                    </div>
+                </div>
+                <!-- Q3 -->
+                <div class="reveal faq-item glass-panel rounded-3xl border border-white/5 transition-all">
+                    <button class="faq-btn w-full flex justify-between items-center p-8 text-left">
+                        <span class="font-black uppercase tracking-tight italic text-base sm:text-xl text-white pr-6">Do you offer free on-site assessments?</span>
+                        <i class="fa-solid fa-plus faq-icon text-yellow-500 transition-transform duration-500"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-400 font-medium text-sm sm:text-lg leading-relaxed">
+                        <div class="border-t border-white/5 pt-6">
+                            Absolutely. Harry provides professional on-site assessments and detailed quotes at no cost to you within the Gauteng region.
+                        </div>
+                    </div>
+                </div>
+                <!-- Q4 -->
+                <div class="reveal faq-item glass-panel rounded-3xl border border-white/5 transition-all">
+                    <button class="faq-btn w-full flex justify-between items-center p-8 text-left">
+                        <span class="font-black uppercase tracking-tight italic text-base sm:text-xl text-white pr-6">Which areas do you currently cover?</span>
+                        <i class="fa-solid fa-plus faq-icon text-yellow-500 transition-transform duration-500"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-400 font-medium text-sm sm:text-lg leading-relaxed">
+                        <div class="border-t border-white/5 pt-6">
+                            We primarily serve the entire Gauteng province, but we are also open to large-scale renovation projects in surrounding provinces. Call us to confirm your location.
+                        </div>
+                    </div>
+                </div>
+                <!-- Q5 -->
+                <div class="reveal faq-item glass-panel rounded-3xl border border-white/5 transition-all">
+                    <button class="faq-btn w-full flex justify-between items-center p-8 text-left">
+                        <span class="font-black uppercase tracking-tight italic text-base sm:text-xl text-white pr-6">Do you handle commercial projects?</span>
+                        <i class="fa-solid fa-plus faq-icon text-yellow-500 transition-transform duration-500"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-400 font-medium text-sm sm:text-lg leading-relaxed">
+                        <div class="border-t border-white/5 pt-6">
+                            Yes, we handle both residential homes and commercial maintenance contracts. Our team is equipped to manage larger office renovations and structural maintenance.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacts" class="py-24 sm:py-40 px-6">
+        <div class="reveal max-w-6xl mx-auto glass-panel rounded-[3rem] sm:rounded-[4rem] overflow-hidden grid lg:grid-cols-2 shadow-2xl border border-white/10">
+            <!-- Form -->
+            <div id="form-container" class="p-8 sm:p-20 order-2 lg:order-1">
+                <form id="contact-form" class="space-y-6">
+                    <h3 class="text-2xl font-black text-white uppercase italic tracking-widest mb-10 border-b border-white/10 pb-4">Schedule Site Visit</h3>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-5 top-5 text-slate-400"></i>
+                        <input required type="text" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-6 focus:ring-2 focus:ring-yellow-500 outline-none text-white transition-all">
+                    </div>
+                    <div class="relative">
+                        <i class="fa-solid fa-phone absolute left-5 top-5 text-slate-400"></i>
+                        <input required type="tel" placeholder="Cell Number" class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-6 focus:ring-2 focus:ring-yellow-500 outline-none text-white transition-all">
+                    </div>
+                    <div class="relative">
+                        <i class="fa-solid fa-message absolute left-5 top-5 text-slate-400"></i>
+                        <textarea required rows="4" placeholder="How can we help you today?" class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-6 focus:ring-2 focus:ring-yellow-500 outline-none text-white transition-all resize-none"></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="w-full bg-yellow-500 text-black font-black py-6 rounded-2xl uppercase italic tracking-[0.3em] shadow-xl hover:bg-yellow-400 transition-all flex items-center justify-center gap-4 text-lg">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span id="btn-text">Request Quote</span>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Details -->
+            <div class="p-8 sm:p-20 bg-yellow-500 text-black order-1 lg:order-2 flex flex-col justify-center">
+                <h2 class="text-5xl sm:text-7xl font-black uppercase italic tracking-tighter mb-10 leading-[0.9]">Start Your <span class="text-zinc-900 not-italic">Project.</span></h2>
+                <p class="text-yellow-900 text-lg sm:text-xl font-bold mb-16 leading-relaxed opacity-90">
+                    Expert renovation solutions at your doorstep. From minor maintenance to major kitchen remodels, Harry is ready to help.
+                </p>
+                
+                <div class="space-y-10">
+                    <div class="flex items-start gap-6">
+                        <div class="bg-black/10 p-4 rounded-2xl"><i class="fa-solid fa-phone-volume text-3xl"></i></div>
+                        <div>
+                            <p class="text-xs uppercase font-black tracking-widest opacity-70 mb-1">Direct Line</p>
+                            <p class="text-2xl font-black tracking-tight">064 590 2826</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6">
+                        <div class="bg-black/10 p-4 rounded-2xl"><i class="fa-solid fa-envelope text-3xl"></i></div>
+                        <div>
+                            <p class="text-xs uppercase font-black tracking-widest opacity-70 mb-1">Official Email</p>
+                            <p class="text-xl font-black tracking-tight">bgjprojects@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-20 text-center border-t border-white/5 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-center gap-3 mb-10">
+                <div class="bg-yellow-500 p-2 rounded-lg">
+                    <span class="text-black font-black text-2xl leading-none">BGJ</span>
+                </div>
+                <div class="flex flex-col leading-none text-left">
+                    <span class="text-2xl font-black italic uppercase text-white">PROJECTS</span>
+                    <span class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-90 text-yellow-500">(PTY) LTD</span>
+                </div>
+            </div>
+            <div class="w-full h-px bg-white/5 my-14"></div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-slate-600 text-[10px] font-black uppercase tracking-[0.4em]">
+                <p>&copy; <span id="year"></span> BGJ Projects (PTY) LTD. Registered Professional Contractors.</p>
+                <div class="flex gap-10">
+                    <a href="#services" class="hover:text-yellow-500">Services</a>
+                    <a href="#about" class="hover:text-yellow-500">About Us</a>
+                    <a href="tel:0645902826" class="text-white hover:text-yellow-500 italic">Harry: 064 590 2826</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FAB -->
+    <a href="https://wa.me/27645902826" target="_blank" class="whatsapp-fab shadow-yellow-500/50">
+        <i class="fa-brands fa-whatsapp text-4xl"></i>
+    </a>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }, 800);
+        });
+
+        // Navbar Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-black/95', 'backdrop-blur-xl', 'py-4', 'shadow-2xl', 'border-b', 'border-white/5');
+                navbar.classList.remove('py-6', 'sm:py-8');
+            } else {
+                navbar.classList.remove('bg-black/95', 'backdrop-blur-xl', 'py-4', 'shadow-2xl', 'border-b', 'border-white/5');
+                navbar.classList.add('py-6', 'sm:py-8');
+            }
+
+            // Scroll Reveals
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 50) {
+                    el.classList.add('reveal-visible');
+                }
+            });
+        });
+
+        // Mobile Sidebar
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuToggle.addEventListener('click', () => sidebar.classList.remove('translate-x-full'));
+        closeMenu.addEventListener('click', () => sidebar.classList.add('translate-x-full'));
+        mobileLinks.forEach(link => link.addEventListener('click', () => sidebar.classList.add('translate-x-full')));
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const btn = item.querySelector('.faq-btn');
+            btn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        // Form Submission Simulation
+        const contactForm = document.getElementById('contact-form');
+        const formContainer = document.getElementById('form-container');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            btn.disabled = true;
+            btnText.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i>';
+
+            setTimeout(() => {
+                formContainer.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center py-20 px-4">
+                        <div class="w-24 h-24 bg-yellow-500/20 text-yellow-500 rounded-full flex items-center justify-center mb-8">
+                            <i class="fa-solid fa-check text-4xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-black text-white uppercase italic mb-4">Request Sent!</h3>
+                        <p class="text-slate-300 text-lg">Harry will call you back shortly.</p>
+                        <button onclick="location.reload()" class="mt-10 text-yellow-500 font-bold uppercase tracking-[0.3em] text-xs underline">Send Another Message</button>
+                    </div>
+                `;
+            }, 1800);
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
